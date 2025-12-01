@@ -27,7 +27,7 @@ This option runs Ollama in Docker alongside the database.
 
 ```bash
 # 1. Start all services including Ollama
-docker-compose --profile ollama up -d
+docker compose --profile ollama up -d
 
 # 2. Wait for Ollama to download models (first time only)
 docker logs -f local-rag-ollama-setup
@@ -42,7 +42,7 @@ If you have Ollama running elsewhere (e.g., locally installed or remote server):
 
 ```bash
 # 1. Start only the database
-docker-compose up -d
+docker compose up -d
 
 # 2. Update src/main/resources/application.yaml
 # Change ollamaBaseUrl to your Ollama instance URL
@@ -152,13 +152,13 @@ Edit `src/main/resources/application.yaml` to customize.
 
 ```bash
 # Start only the database
-docker-compose up db -d
+docker compose up db -d
 
 ### Ollama (Optional)
 
 ```bash
 # Start Ollama with the ollama profile
-docker-compose --profile ollama up ollama -d
+docker compose --profile ollama up ollama -d
 
 # View available models
 docker exec local-rag-ollama ollama list
@@ -204,7 +204,7 @@ curl http://localhost:11434/api/tags
 **Solution:**
 ```bash
 # Start PostgreSQL
-docker-compose up db -d
+docker compose up db -d
 
 # Check it's running
 docker ps | grep postgres
