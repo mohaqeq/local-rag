@@ -1,4 +1,4 @@
-# Local RAG - PDF Question Answering System
+# Local RAG
 
 A local Retrieval-Augmented Generation (RAG) application built with Kotlin and Ktor that allows you to upload 
 PDF documents and query them using local LLMs via Ollama. Document embeddings are stored in PostgreSQL with pgVector 
