@@ -119,6 +119,7 @@ curl -X POST http://localhost:8080/query \
 }
 ```
 _Retry the request if you received timeout. It takes time to load the model for in memory for the first time_
+
 **What happens behind the scenes:**
 1. Query is expanded into 5 variations using the LLM for better retrieval
 2. Each variation is embedded using mxbai-embed-large
