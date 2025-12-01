@@ -118,7 +118,7 @@ curl -X POST http://localhost:8080/query \
   "error": "Query cannot be empty"
 }
 ```
-_Retry the request if you received timeout. It takes time to load the model for in memory for the first time_
+_If you receive a timeout error, retry the request. It takes time to load the model into memory for the first time._
 
 **What happens behind the scenes:**
 1. Query is expanded into 5 variations using the LLM for better retrieval
