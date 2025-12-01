@@ -3,9 +3,9 @@ package localrag.services
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import localrag.clients.PgVectorClient
 import localrag.clients.OllamaClient
 import localrag.clients.PDFProcessor
+import localrag.clients.PgVectorClient
 import localrag.models.Document
 import org.slf4j.LoggerFactory
 import java.io.File

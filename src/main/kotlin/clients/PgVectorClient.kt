@@ -3,12 +3,9 @@ package localrag.clients
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.encodeToString
 import localrag.Config
 import localrag.models.Document
 import org.slf4j.LoggerFactory
-import java.sql.Connection
-import java.sql.ResultSet
 
 class PgVectorClient(private val config: Config) {
     private val logger = LoggerFactory.getLogger(javaClass)

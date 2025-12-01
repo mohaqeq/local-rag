@@ -1,7 +1,7 @@
 package localrag.services
 
-import localrag.clients.PgVectorClient
 import localrag.clients.OllamaClient
+import localrag.clients.PgVectorClient
 import localrag.models.Message
 import org.slf4j.LoggerFactory
 

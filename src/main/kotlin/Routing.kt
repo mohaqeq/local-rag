@@ -4,10 +4,8 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.PartData
 import io.ktor.http.content.forEachPart
-import io.ktor.http.content.streamProvider
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStopped
-import io.ktor.server.http.content.file
 import io.ktor.server.request.receive
 import io.ktor.server.request.receiveMultipart
 import io.ktor.server.response.respond
@@ -17,13 +15,9 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import io.ktor.util.cio.writeChannel
 import io.ktor.utils.io.copyAndClose
-import io.ktor.utils.io.copyTo
-import io.ktor.utils.io.exhausted
-import io.ktor.utils.io.jvm.javaio.toInputStream
-import kotlinx.io.files.SystemFileSystem
-import localrag.clients.PgVectorClient
 import localrag.clients.OllamaClient
 import localrag.clients.PDFProcessor
+import localrag.clients.PgVectorClient
 import localrag.models.EmbedFileResponse
 import localrag.models.ErrorResponse
 import localrag.models.QueryRequest
@@ -91,7 +85,7 @@ fun Application.configureRouting(config: Config) {
                 }
 
                 // Process the file
-                val success = embeddingService.embedFile(tempFile!!, originalFilename!!)
+                val success = embeddingService.embedFile(tempFile, originalFilename)
 
                 // Clean up temp file
                 tempFile.delete()
