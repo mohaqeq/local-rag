@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    container_name: postgres-pgvector
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: embedding_db
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev_user -d embedding_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: local-rag-ollama
+    profiles: ["ollama"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    # For GPU support (NVIDIA), uncomment the following:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # Ollama model initialization service
+  # This will pull the required models on first run
+  ollama-setup:
+    image: ollama/ollama:latest
+    container_name: local-rag-ollama-setup
+    profiles: ["ollama"]
+    depends_on:
+      ollama:
+        condition: service_healthy
+    volumes:
+      - ./ollama_data:/root/.ollama
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        echo "Waiting for Ollama to be ready..."
+        sleep 5
+        echo "Pulling qwen3 model..."
+        ollama pull qwen3
+        echo "Pulling mxbai-embed-large model..."
+        ollama pull mxbai-embed-large
+        echo "Models pulled successfully!"
+    restart: "no"
